@@ -143,7 +143,7 @@ number Literal Type
 슈퍼타입 - 부모타입
 서브타입 - 자식타입
 타입 호환성 : 어떤 타입을 다른 타입으로 취급해도 괜찮은지 판단하는 것
-number Literal Type -> number Type : 업 캐스팅
+number Literal Type -> number Type : 업 캐스팅 (자식이 부모값을 가지는 것.)
 number Type -> number Literal Type : 다운 캐스팅
  */
 
