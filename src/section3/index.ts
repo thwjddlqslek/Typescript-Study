@@ -212,7 +212,101 @@ let cat = {
 // 객체 as const로 하면 자동 read only로 변경. 아래와 같이 수정 불가.
 //cat.name='여옹이';
 
+/* Non Null 단언 */
 
+type Post = {
+    title : string;
+    author? : string;
+}
+
+let post : Post = {
+    title: "게시글1",
+    author: "김소정",
+}
+
+// null과 undefined이 아니라는 의미
+const len: number = post.author!.length;
+
+/* 타입 좁히기 */
+
+/* 타입 가드 : typeof, instanceof */
+
+type PersonA = {
+    name : string;
+    age : number;
+}
+
+function func1(value: number | string | Date | null | PersonA) {
+    if (typeof value === "number"){
+        console.log(value.toFixed());
+    } else if (typeof value ==="string"){
+        console.log(value.toUpperCase());
+    } else if (value instanceof Date){
+        console.log(value.getTime());
+    } else if (value && "age" in value){
+        //PersonA는 형식만 참조, 여기서는 값으로 사용.
+        console.log(`${value.name}은 ${value.age}살입니다.`);
+    }
+}
+
+/* 서로소 유니온 타입 
+-> 교집합이 없는 타입들 즉 서로소 관계에 있는 타입들을 모아 만든 유니온 타입 */
+
+// 비동기 작업의 결과를 처리하는 객체 실습
+
+type LoadingTask = {
+    state: 'LOADING';
+}
+
+type FailedTask = {
+    state: 'FAILED';
+    error: {
+        message: string;
+    },
+}
+
+type SuccessTask = {
+    state: 'SUCCESS';
+    response: {
+        data: string;
+    },
+}
+type AsyncTask = LoadingTask | FailedTask | SuccessTask;
+
+function processResult(task: AsyncTask){
+    switch(task.state){
+        case 'LOADING': {
+            console.log("로딩중");
+            break;
+        }
+        case 'FAILED':{
+            console.log(`에러 발생 : ${task.error.message}`);
+            break;
+        }
+        case 'SUCCESS':{
+            console.log(`성공 응답 : ${task.response.data}`);
+            break;
+        }
+    }
+}
+
+const loading = {
+    state: 'LOADING',
+}
+
+const failed = {
+    state: 'FAILED',
+    error: {
+        message: '오류 발생 원인은 ~',
+    },
+};
+
+const success = {
+    state: 'SUCCESS',
+    response: {
+        data: '데이터~',
+    }
+}
 
 
 
