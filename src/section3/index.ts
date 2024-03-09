@@ -273,6 +273,8 @@ type SuccessTask = {
 }
 type AsyncTask = LoadingTask | FailedTask | SuccessTask;
 
+// 조건문보다는 switch문이 편리할듯 함.
+// 동시에 여러가지 상태 표현 -> 선택적 프로퍼티보다는 state, tag 프로퍼티 추가해서 서로소 유니언 타입 생성.
 function processResult(task: AsyncTask){
     switch(task.state){
         case 'LOADING': {
@@ -308,6 +310,29 @@ const success = {
     }
 }
 
+enum Job {
+    Knight,
+    Archer,
+    Mage,
+    Priest,
+    Thief,
+}
+
+const knight = {
+    name: Job.Knight,
+}
+const archer = {
+    name: Job.Archer,
+}
+const mage = {
+    name: Job.Mage,
+}
+const priest = {
+    name: Job.Priest,
+}
+const thief = {
+    name: Job.Thief,
+}
 
 
 
